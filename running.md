@@ -33,3 +33,26 @@ This creates an optimized build in the .next folder.
 Run in Production Mode (After Building):
 After a successful build, you can start the site in production mode with: npm start
 This will serve the optimized build, also usually at http://localhost:3000 unless configured otherwise.
+
+### Images
+
+Configuration: I need to tell Next.js which external domains are allowed to serve images. This is done by adding an images configuration to your next.config.js file. For example:
+// next.config.js
+module.exports = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https', // Or 'http'
+        hostname: 'some-external-domain.com', // The domain where images are hosted
+        port: '', // Usually empty unless a specific port is needed
+        pathname: '/path/to/images/**', // Optional: if images are under a specific path
+      },
+    ],
+  },
+};
+I'd need to identify all the external hostnames your original site uses for images.
+Using next/image: Once configured, you can use the next/image component with the full external URL as the src prop:
+import Image from 'next/image';
+
+<Image src="https://some-external-domain.com/path/to/your/image.jpg" alt="Description" width={500} height={300} />
+You'll still need to provide width and height (or use layout="fill" with a sized container) for next/image to prevent layout shift and optimize correctly.
