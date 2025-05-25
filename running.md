@@ -7,6 +7,7 @@ Install Dependencies: Run the command npm install (or yarn install if you prefer
 ### Set Up Environment Variables (Crucial for Contact Form):
 Create a file named .env.local in the root of the project.
 Add the following lines to it, replacing the placeholder values with your actual email credentials for sending the contact form emails:
+
 EMAIL_SERVICE=your_email_service_provider # e.g., 'gmail', 'hotmail'
 EMAIL_HOST=your_smtp_host # Optional, e.g., 'smtp.gmail.com'
 EMAIL_PORT=your_smtp_port # Optional, e.g., 587 (for TLS) or 465 (for SSL)
@@ -15,6 +16,7 @@ EMAIL_USER=your_sending_email_address@example.com
 EMAIL_PASS=your_email_password_or_app_password
 ADMIN_EMAIL=recipient_email_for_inquiries@example.com
 SITE_URL=http://localhost:3000 # Or your actual deployment URL for sitemap
+
 Note: For Gmail, if you have 2-Factor Authentication enabled, you'll likely need to generate an "App Password" to use in EMAIL_PASS.
 
 ### NPM 
