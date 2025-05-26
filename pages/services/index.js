@@ -36,18 +36,26 @@ const services = [
 
 export default function ServicesPage() {
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold text-gray-800 mb-6 text-center">Our DJ Services</h1>
-      <p className="text-lg text-gray-600 mb-12 text-center max-w-2xl mx-auto">
+    <div className="container mx-auto px-4 py-16"> {/* Updated padding */}
+      {/* H1 inherits: font-serif, text-5xl, font-bold, text-brand-secondary, mb-6 */}
+      <h1 className="text-center">Our DJ Services</h1> {/* Removed specific styles, added text-center */}
+      {/* P inherits: font-sans, text-gray-800, leading-relaxed, mb-4. Added mb-12, max-w-3xl */}
+      <p className="text-center max-w-3xl mx-auto mb-12">
         At Momentum DJs, we offer a comprehensive range of professional DJ services to cater to any event type and musical taste. We are committed to providing high-quality entertainment and creating the perfect atmosphere for your special occasion.
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {services.map((service) => (
-          <div key={service.slug} className="bg-white shadow-lg rounded-lg p-6 hover:shadow-xl transition-shadow duration-300">
-            <h2 className="text-2xl font-semibold text-indigo-600 mb-3">{service.name}</h2>
-            <p className="text-gray-700 mb-4">{service.description}</p>
-            <Link href={`/services/${service.slug}`} className="inline-flex items-center text-indigo-500 hover:text-indigo-700 font-medium transition-colors">
+          <div 
+            key={service.slug} 
+            className="bg-white rounded-lg shadow-lg p-8 hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300 border-t-4 border-brand-primary"
+          >
+            {/* H3 inherits: font-serif, text-3xl, font-bold, text-gray-700, mb-4. Overriding mb-3 */}
+            <h3 className="mb-3">{service.name}</h3>
+            {/* P inherits: font-sans, text-gray-700 (overriding body default), mb-4, leading-relaxed */}
+            <p className="text-gray-700">{service.description}</p> {/* text-gray-700 specified as per instructions */}
+            {/* Link inherits: text-brand-primary, hover:text-orange-700, font-medium */}
+            <Link href={`/services/${service.slug}`} className="inline-flex items-center font-medium"> {/* Removed specific text colors */}
               Learn More
               <ArrowRightIcon className="ml-2 h-5 w-5" />
             </Link>
@@ -56,8 +64,13 @@ export default function ServicesPage() {
       </div>
 
       <div className="mt-16 text-center">
-        <p className="text-xl text-gray-700 mb-4">Don't see exactly what you're looking for?</p>
-        <Link href="/contact" className="bg-indigo-600 text-white font-semibold py-3 px-6 rounded-lg hover:bg-indigo-700 transition duration-300 ease-in-out transform hover:scale-105">
+        {/* P has specified styles */}
+        <p className="text-xl text-gray-700 mb-4 font-sans">Don't see exactly what you're looking for?</p>
+        {/* Link has specified styles */}
+        <Link 
+          href="/contact" 
+          className="bg-brand-primary text-white font-semibold py-3 px-8 rounded-lg hover:bg-orange-700 transition duration-300 ease-in-out transform hover:scale-105"
+        >
           Contact Us for a Custom Quote
         </Link>
       </div>

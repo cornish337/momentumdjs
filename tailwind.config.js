@@ -25,6 +25,6 @@ module.exports = {
   plugins: [
     require('@tailwindcss/forms'),
     require('@tailwindcss/typography'),
-    // require('@tailwindcss/aspect-ratio'), // Will add if explicitly needed for video embeds
+    require('@tailwindcss/aspect-ratio'),
   ],
 };

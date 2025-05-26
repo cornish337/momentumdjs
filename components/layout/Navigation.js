@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { useState } from 'react';
+import { useRouter } from 'next/router'; // Import useRouter
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 
 const navLinks = [
@@ -13,6 +14,7 @@ const navLinks = [
 
 const Navigation = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const router = useRouter(); // Initialize useRouter
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -20,6 +22,20 @@ const Navigation = () => {
 
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false);
+  };
+
+  const linkClasses = (href) => {
+    const isActive = router.pathname === href;
+    return `px-3 py-2 rounded-md text-sm font-medium ${
+      isActive ? 'text-brand-primary font-semibold' : 'text-gray-200 hover:text-brand-primary'
+    }`;
+  };
+
+  const mobileLinkClasses = (href) => {
+    const isActive = router.pathname === href;
+    return `block px-3 py-2 rounded-md text-base font-medium ${
+      isActive ? 'text-brand-primary font-semibold' : 'text-gray-200 hover:text-brand-primary'
+    }`;
   };
 
   return (
@@ -31,12 +47,12 @@ const Navigation = () => {
           aria-expanded={isMobileMenuOpen}
           aria-controls="mobile-menu"
           aria-label="Open navigation menu"
-          className="text-white focus:outline-none"
+          className="text-white focus:outline-none" // Icon color
         >
           {isMobileMenuOpen ? (
-            <XMarkIcon className="h-8 w-8" />
+            <XMarkIcon className="h-8 w-8 text-white" /> // Icon color
           ) : (
-            <Bars3Icon className="h-8 w-8" />
+            <Bars3Icon className="h-8 w-8 text-white" /> // Icon color
           )}
         </button>
       </div>
@@ -45,7 +61,7 @@ const Navigation = () => {
       <ul className="hidden md:flex space-x-4">
         {navLinks.map((link) => (
           <li key={link.href}>
-            <Link href={link.href} className="text-white hover:text-indigo-300 px-3 py-2 rounded-md text-sm font-medium">
+            <Link href={link.href} className={linkClasses(link.href)}>
               {link.label}
             </Link>
           </li>
@@ -56,15 +72,15 @@ const Navigation = () => {
       <div
         id="mobile-menu"
         className={`
-          md:hidden absolute top-16 right-0 left-0 bg-gray-800 shadow-lg z-50
-          transition-all duration-300 ease-in-out transform
-          ${isMobileMenuOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-95 pointer-events-none'}
+          md:hidden absolute top-full right-0 left-0 bg-brand-secondary shadow-lg z-50
+          transition-all duration-300 ease-in-out transform origin-top
+          ${isMobileMenuOpen ? 'opacity-100 scale-y-100' : 'opacity-0 scale-y-95 pointer-events-none'}
         `}
       >
-        <ul className="flex flex-col items-center space-y-4 py-4">
+        <ul className="flex flex-col items-center space-y-2 py-4"> {/* Reduced space-y for tighter packing */}
           {navLinks.map((link) => (
             <li key={link.href}>
-              <Link href={link.href} onClick={closeMobileMenu} className="text-white hover:text-indigo-300 block px-3 py-2 rounded-md text-base font-medium">
+              <Link href={link.href} onClick={closeMobileMenu} className={mobileLinkClasses(link.href)}>
                 {link.label}
               </Link>
             </li>

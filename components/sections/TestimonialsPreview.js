@@ -1,4 +1,5 @@
-import { StarIcon } from '@heroicons/react/24/solid'; // Example icon
+import { StarIcon } from '@heroicons/react/24/solid';
+import Link from 'next/link'; // Import Link for the button
 
 const testimonials = [
   {
@@ -23,27 +24,43 @@ const testimonials = [
 
 const TestimonialsPreview = () => {
   return (
-    <section className="py-16 bg-white w-full">
+    <section className="py-16 bg-gray-100 w-full"> {/* Updated section background */}
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-12 text-gray-800">
+        {/* Title will inherit styles from globals.css: font-serif, font-bold, text-brand-secondary, text-4xl, mb-5 */}
+        {/* Overriding size to text-3xl (as it was) or text-4xl (as per H2 global) - keeping H2 global style */}
+        <h2 className="text-center mb-12"> {/* Removed specific text color/size, will inherit */}
           What Our Clients Say
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {testimonials.map((testimonial, index) => (
             <div
               key={index}
-              className="bg-gray-50 p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out"
+              className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out" // Updated card background
             >
               <div className="flex mb-2">
                 {[...Array(testimonial.rating)].map((_, i) => (
-                  <StarIcon key={i} className="h-5 w-5 text-yellow-400" />
+                  <StarIcon key={i} className="h-5 w-5 text-yellow-400" /> // Star color kept as text-yellow-400
                 ))}
               </div>
-              <p className="text-gray-600 italic mb-4">"{testimonial.quote}"</p>
-              <p className="text-gray-700 font-semibold">{testimonial.name}</p>
-              <p className="text-gray-500 text-sm">{testimonial.event}</p>
+              {/* P will inherit: font-sans, text-gray-800 (body default), mb-4, leading-relaxed */}
+              {/* Overriding text color, font style */}
+              <p className="font-sans text-gray-700 italic mb-4">"{testimonial.quote}"</p>
+              {/* P will inherit: font-sans, text-gray-800 (body default), mb-4, leading-relaxed */}
+              {/* Overriding text color, font style, and margin */}
+              <p className="font-sans font-semibold text-brand-secondary mb-1">{testimonial.name}</p>
+              {/* P will inherit: font-sans, text-gray-800 (body default), mb-4, leading-relaxed */}
+              {/* Overriding text color, font style, and margin */}
+              <p className="font-sans text-gray-600 text-sm mb-0">{testimonial.event}</p>
             </div>
           ))}
+        </div>
+        <div className="text-center mt-12">
+          <Link
+            href="/testimonials"
+            className="bg-brand-primary text-white font-semibold py-3 px-8 rounded-lg hover:bg-orange-700 transition duration-300 ease-in-out transform hover:scale-105"
+          >
+            Read More Testimonials
+          </Link>
         </div>
       </div>
     </section>
