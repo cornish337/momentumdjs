@@ -21,23 +21,33 @@ export default function ContactForm() {
       });
 
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Submission failed');
+        // Try to parse error message from response, otherwise use a default
+        let errorMessage = 'Submission failed. Please try again.';
+        try {
+            const errorData = await response.json();
+            errorMessage = errorData.message || errorMessage;
+        } catch (e) {
+            // If response is not JSON or doesn't have message, use the default
+        }
+        throw new Error(errorMessage);
       }
-
+      
       setSubmitStatus('success');
       reset(); // Reset form fields
     } catch (error) {
       setSubmitStatus('error');
-      console.error('Form submission error:', error);
+      // It's good practice to log the actual error to the console for debugging
+      console.error('Form submission error:', error.message);
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 bg-gray-50 p-8 rounded-lg shadow-lg">
-      <h2 className="text-2xl font-semibold text-gray-700 mb-6">Send Us a Message</h2>
+    // Updated form container styling
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 bg-white p-8 rounded-lg shadow-xl border border-gray-200">
+      {/* Updated form title styling */}
+      <h2 className="font-serif text-3xl font-bold text-brand-secondary mb-8">Send Us a Message</h2>
 
       {submitStatus === 'success' && (
         <div className="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg" role="alert">
@@ -50,19 +60,21 @@ export default function ContactForm() {
         </div>
       )}
 
+      {/* Ensuring labels and inputs use font-sans (global style should cover, but can be explicit if needed) */}
       <div>
-        <label htmlFor="name" className="block text-sm font-medium text-gray-700">Full Name</label>
+        <label htmlFor="name" className="block text-sm font-medium text-gray-700 font-sans">Full Name</label>
         <input
           type="text"
           id="name"
           {...register('name', { required: 'Full name is required' })}
-          className={`mt-1 block w-full px-3 py-2 border ${errors.name ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
+          // Updated input field styling (focus states)
+          className={`mt-1 block w-full px-3 py-2 border ${errors.name ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:outline-none focus:ring-brand-primary focus:border-brand-primary sm:text-sm font-sans`}
         />
-        {errors.name && <p className="mt-2 text-sm text-red-600">{errors.name.message}</p>}
+        {errors.name && <p className="mt-2 text-sm text-red-600 font-sans">{errors.name.message}</p>}
       </div>
 
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email Address</label>
+        <label htmlFor="email" className="block text-sm font-medium text-gray-700 font-sans">Email Address</label>
         <input
           type="email"
           id="email"
@@ -73,58 +85,59 @@ export default function ContactForm() {
               message: 'Invalid email address'
             }
           })}
-          className={`mt-1 block w-full px-3 py-2 border ${errors.email ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
+          className={`mt-1 block w-full px-3 py-2 border ${errors.email ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:outline-none focus:ring-brand-primary focus:border-brand-primary sm:text-sm font-sans`}
         />
-        {errors.email && <p className="mt-2 text-sm text-red-600">{errors.email.message}</p>}
+        {errors.email && <p className="mt-2 text-sm text-red-600 font-sans">{errors.email.message}</p>}
       </div>
 
       <div>
-        <label htmlFor="phone" className="block text-sm font-medium text-gray-700">Phone Number (Optional)</label>
+        <label htmlFor="phone" className="block text-sm font-medium text-gray-700 font-sans">Phone Number (Optional)</label>
         <input
           type="tel"
           id="phone"
           {...register('phone')}
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-brand-primary focus:border-brand-primary sm:text-sm font-sans"
         />
       </div>
 
       <div>
-        <label htmlFor="eventDate" className="block text-sm font-medium text-gray-700">Event Date (Optional)</label>
+        <label htmlFor="eventDate" className="block text-sm font-medium text-gray-700 font-sans">Event Date (Optional)</label>
         <input
           type="date"
           id="eventDate"
           {...register('eventDate')}
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-brand-primary focus:border-brand-primary sm:text-sm font-sans"
         />
       </div>
       
       <div>
-        <label htmlFor="eventType" className="block text-sm font-medium text-gray-700">Type of Event (Optional)</label>
+        <label htmlFor="eventType" className="block text-sm font-medium text-gray-700 font-sans">Type of Event (Optional)</label>
         <input
           type="text"
           id="eventType"
           {...register('eventType')}
           placeholder="e.g., Wedding, Corporate, Birthday"
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-brand-primary focus:border-brand-primary sm:text-sm font-sans"
         />
       </div>
 
       <div>
-        <label htmlFor="message" className="block text-sm font-medium text-gray-700">Message</label>
+        <label htmlFor="message" className="block text-sm font-medium text-gray-700 font-sans">Message</label>
         <textarea
           id="message"
           rows="4"
           {...register('message', { required: 'Message is required' })}
-          className={`mt-1 block w-full px-3 py-2 border ${errors.message ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
+          className={`mt-1 block w-full px-3 py-2 border ${errors.message ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:outline-none focus:ring-brand-primary focus:border-brand-primary sm:text-sm font-sans`}
         ></textarea>
-        {errors.message && <p className="mt-2 text-sm text-red-600">{errors.message.message}</p>}
+        {errors.message && <p className="mt-2 text-sm text-red-600 font-sans">{errors.message.message}</p>}
       </div>
 
       <div>
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-indigo-300"
+          // Updated button styling
+          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-semibold text-white bg-brand-primary hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-primary disabled:bg-orange-300 font-sans"
         >
           {isSubmitting ? 'Sending...' : 'Send Message'}
         </button>

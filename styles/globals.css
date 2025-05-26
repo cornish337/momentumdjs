@@ -2,10 +2,45 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Optional: Add any global styles or custom base styles here */
-/* For example:
-body {
-  font-family: 'Inter', sans-serif; // Assuming Inter is imported or a system font
-  @apply antialiased text-gray-900 bg-white;
+@layer base {
+  body {
+    @apply font-sans text-gray-800 bg-white antialiased;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-serif font-bold; /* Bolder headings */
+  }
+
+  h1 {
+    @apply text-5xl mb-6 text-brand-secondary; /* Larger size for main headings */
+  }
+
+  h2 {
+    @apply text-4xl mb-5 text-brand-secondary; /* Slightly smaller than h1 */
+  }
+
+  h3 {
+    @apply text-3xl mb-4 text-gray-700;
+  }
+
+  h4 {
+    @apply text-2xl mb-3 text-gray-700;
+  }
+
+  h5 {
+    @apply text-xl mb-2 text-gray-600;
+  }
+
+  h6 {
+    @apply text-lg mb-2 text-gray-600;
+  }
+
+  /* Ensure links have a consistent style */
+  a {
+    @apply text-brand-primary hover:text-orange-700 transition-colors; /* Using brand-primary from tailwind.config.js */
+  }
+
+  p {
+    @apply mb-4 leading-relaxed; /* Default paragraph spacing and line height */
+  }
 }
-*/

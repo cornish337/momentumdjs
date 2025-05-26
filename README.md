@@ -735,3 +735,88 @@ Tracking website performance and user behavior is essential for ongoing optimiza
 ## 10. Conclusion
 
 This technical plan provides a comprehensive roadmap for rebuilding the Momentum DJs website. By leveraging Next.js for its performance and SEO capabilities, Tailwind CSS for rapid and responsive UI development, and a strong focus on UX, SEO, and multimedia integration, the new website will be well-positioned to attract more visitors and convert them into clients. Adherence to the outlined strategies for structure, content, and analytics will ensure a successful project outcome.
+
+## 11. Contact Form Configuration
+
+The contact form functionality relies on Nodemailer to send email submissions. To enable this, you'll need to configure several environment variables.
+
+### Environment Variables
+
+These variables are defined in the `.env.local.example` file. You will need to create a copy of this file named `.env.local` and populate it with your actual credentials.
+
+**Required:**
+
+*   `EMAIL_USER`: Your sending email address (e.g., `yourname@gmail.com`). This is the "from" address for emails sent by the contact form.
+*   `EMAIL_PASS`: Your email password or an app-specific password if using services like Gmail with 2FA.
+*   `ADMIN_EMAIL`: The email address where you want to receive contact form submissions (e.g., `contact@momentumdjs.co.uk`).
+
+**Optional (often inferred by service, but can be specified):**
+
+*   `EMAIL_SERVICE`: The email service provider (e.g., `'gmail'`, `'outlook365'`). If specified, Nodemailer might infer host and port.
+*   `EMAIL_HOST`: The SMTP server hostname (e.g., `'smtp.gmail.com'`). Required if `EMAIL_SERVICE` is not specific enough or for custom SMTP servers.
+*   `EMAIL_PORT`: The port for the SMTP server (e.g., `587` for TLS, `465` for SSL).
+*   `EMAIL_SECURE`: Set to `true` if using SSL (typically port 465), or `false` for TLS (typically port 587).
+
+### Setup Instructions
+
+1.  **Create `.env.local` file:**
+    In the root of the project, make a copy of the `.env.local.example` file and rename it to `.env.local`.
+    ```bash
+    cp .env.local.example .env.local
+    ```
+2.  **Populate Credentials:**
+    Open `.env.local` and fill in the values for `EMAIL_USER`, `EMAIL_PASS`, and `ADMIN_EMAIL` with your actual email credentials. Adjust the optional variables if necessary for your email provider.
+
+    Example content for `.env.local`:
+    ```
+    # Nodemailer Configuration for Contact Form
+    EMAIL_SERVICE=gmail
+    EMAIL_HOST=smtp.gmail.com
+    EMAIL_PORT=587
+    EMAIL_SECURE=false
+    EMAIL_USER=your.email@gmail.com
+    EMAIL_PASS=your_email_password_or_app_password
+    ADMIN_EMAIL=your_receiving_admin_email@example.com
+    ```
+
+### Deployment
+
+Remember to also configure these environment variables in your deployment environment (e.g., Vercel, Netlify, AWS Amplify). These platforms have settings where you can securely store and provide environment variables to your live application. **Do not commit your `.env.local` file to Git.**
+
+## 12. Deployment
+
+To deploy this Next.js application, follow these general steps:
+
+### Build
+
+Run the following command in the project's root directory to build the application for production:
+
+```bash
+npm run build
+```
+This command will lint, compile, and optimize the application, preparing it for deployment. It also generates the sitemap.
+
+### Environment Variables
+
+Ensure all necessary environment variables are configured in your deployment environment (e.g., Vercel, Netlify, AWS Amplify, etc.). These variables are crucial for the application to function correctly.
+
+**Required environment variables include:**
+
+*   **Contact Form:**
+    *   `EMAIL_USER`: Your sending email address.
+    *   `EMAIL_PASS`: Your email password or app-specific password.
+    *   `ADMIN_EMAIL`: The email address to receive contact form submissions.
+    *   Refer to the "Contact Form Configuration" section (Section 11) for more details on these variables.
+*   **Sitemap Generation:**
+    *   `SITE_URL`: The full canonical URL of your live website (e.g., `https://www.momentumdjs.co.uk`). This is used by `next-sitemap` to generate correct sitemap URLs. This variable should be defined in your `.env.local` file for local sitemap generation and in your deployment environment.
+
+**Example `.env.local` for `SITE_URL`:**
+```
+SITE_URL=http://localhost:3000 # For local development and sitemap generation
+# ... other variables
+```
+For production, `SITE_URL` should be your actual domain.
+
+**Important:**
+*   Never commit your `.env.local` file (or other files containing sensitive credentials) to your Git repository.
+*   Consult your hosting provider's documentation for instructions on how to set environment variables.

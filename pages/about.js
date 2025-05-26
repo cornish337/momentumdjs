@@ -11,9 +11,12 @@ export async function getStaticProps() {
 
 export default function AboutPage() {
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold text-gray-800 mb-6">About Momentum DJs</h1>
-      <div className="space-y-4 text-gray-700">
+    <div className="container mx-auto px-4 py-16"> {/* Updated padding */}
+      {/* H1 will inherit: font-serif, text-5xl, font-bold, text-brand-secondary, mb-6 from globals.css */}
+      <h1 className="text-center">About Momentum DJs</h1> {/* Added text-center */}
+      {/* This div centers the text block and applies spacing between paragraphs */}
+      {/* Paragraphs inside will inherit text-gray-800, leading-relaxed, and mb-4 (though space-y-6 handles it) */}
+      <div className="max-w-3xl mx-auto space-y-6 text-gray-800"> {/* Centered text, increased space-y */}
         <p>
           Welcome to Momentum DJs, where music meets unforgettable moments. We are a passionate team of professional DJs dedicated to providing exceptional entertainment for a wide range of events. Our journey began with a simple love for music and a desire to share that passion with others, transforming ordinary gatherings into extraordinary celebrations.
         </p>
